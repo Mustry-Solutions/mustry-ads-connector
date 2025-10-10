@@ -1,0 +1,16 @@
+{
+  "plc": {
+    "ip": "192.168.1.177",
+    "port": 851
+  },
+  "settings": {
+    "read_interval": 1.0
+  },
+  "tags": [
+    {
+      "name": "MAIN.ToggleBit",
+      "data_type": "BOOL",
+      "description": "Start button"
+    }
+  ]
+}

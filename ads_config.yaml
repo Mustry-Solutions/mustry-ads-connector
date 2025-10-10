@@ -1,0 +1,15 @@
+ads:
+    targetIP: '192.168.1.177'        # IP address of the PLC
+    targetAMS: '192.168.1.177.1.1'   # AMS net ID of the target
+    targetPort: 851                  # Port of the target internal gateway
+    runtimePort: 851                 # Runtime port of PLC system
+    hostAMS: '192.168.1..117.1.1'     # Host AMS net ID. Usually the IP address + .1.1
+    hostPort: 10500                  # Host port
+    readType: 'interval'             # Read type, interval or notification
+    maxDelay: 100                    # Max delay for sending notifications in ms
+    cycleTime: 100                   # Cycle time for notification handler in ms
+    intervalTime: 1000               # Interval time for reading in ms
+    upperCase: false                 # Convert symbol names to all uppercase for older PLCs
+    logLevel: "disabled"             # Log level for ADS connection
+    symbols:                         # List of symbols to read from
+      - "MAIN.ToggleBit"
