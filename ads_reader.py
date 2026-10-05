@@ -25,7 +25,9 @@ class ADSReader:
 
         self.config = self.load_config(config_path)
         self.plc_ip = self.config['plc']['ip']
+        self.plc_ams_net_id = self.config['plc'].get('ams_net_id', f"{self.plc_ip}.1.1")
         self.plc_port = self.config['plc']['port']
+        self.host_ams_net_id = self.config.get('host', {}).get('ams_net_id', None)
         self.read_interval = self.config['settings']['read_interval']
         self.plc = None
         self.tags = self.config['tags']
@@ -33,8 +35,29 @@ class ADSReader:
     def connect(self):
         """Establish connection to PLC"""
         try:
+            # Add route programmatically for standalone mode
+            try:
+                pyads.add_route_to_plc(
+                    sending_net_id=self.host_ams_net_id if self.host_ams_net_id else None,
+                    adding_host_name=self.plc_ip,
+                    ip_address=self.plc_ip,
+                    username="Administrator",
+                    password="1",
+                    route_name="pyads_route"
+                )
+                print(f"Added route to {self.plc_ip}")
+            except Exception as route_err:
+                print(f"Route add info: {route_err} (may already exist)")
+
             # Create connection with AMS Net ID format
-            self.plc = pyads.Connection(f'{self.plc_ip}.1.1', self.plc_port)
+            if self.host_ams_net_id:
+                # VPN/remote connection - specify source AMS Net ID
+                self.plc = pyads.Connection(self.plc_ams_net_id, self.plc_port, self.host_ams_net_id)
+                print(f"Connecting via VPN: {self.host_ams_net_id} -> {self.plc_ams_net_id}:{self.plc_port}")
+            else:
+                # Local network connection
+                self.plc = pyads.Connection(self.plc_ams_net_id, self.plc_port)
+                print(f"Connecting locally to {self.plc_ams_net_id}:{self.plc_port}")
 
             # Set connection timeout to reduce frame warnings
             self.plc.set_timeout(5000)  # 5 seconds timeout

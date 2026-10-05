@@ -1,0 +1,5 @@
+Defaulting to user installation because normal site-packages is not writeable
+Collecting pyads
+  Using cached pyads-3.5.0-cp313-cp313-win_amd64.whl
+Installing collected packages: pyads
+Successfully installed pyads-3.5.0

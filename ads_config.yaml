@@ -3,7 +3,7 @@ ads:
     targetAMS: '192.168.1.177.1.1'   # AMS net ID of the target
     targetPort: 851                  # Port of the target internal gateway
     runtimePort: 851                 # Runtime port of PLC system
-    hostAMS: '192.168.1..117.1.1'     # Host AMS net ID. Usually the IP address + .1.1
+    hostAMS: '192.168.1.62.1.1'     # Host AMS net ID. Usually the IP address + .1.1
     hostPort: 10500                  # Host port
     readType: 'interval'             # Read type, interval or notification
     maxDelay: 100                    # Max delay for sending notifications in ms
